@@ -7,40 +7,59 @@ body {
 }
 
 .container {
+    min-width: 100vw;
     padding: 5px 10px;
-    background-color: black;
-    height: 100vh;
-    width: 40%;
     color: white;
     text-align: center;
+    background-color: #183445;
 }
 
 .display {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40vh;
-    font-size: 8rem;
+    height: 50vh;
+    font-size: 6rem;
+}
+
+.display p {
+    padding-top: 4rem;
 }
 
 .control {
+    height: 15vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .control button {
-    font-size: 1.2rem;
-    height: 5rem;
-    width: 5rem;
+    font-size: 1rem;
+    height: 6rem;
+    width: 6rem;
     border-radius: 50%;
-    outline: green solid 2px;
-    border: 3px solid white;
-    background-color: green;
+    margin: 0rem 1rem;
+}
+
+.btn-start {
+    outline: #175345 solid 2px;
+    border: 3px solid #183445;
+    color: #B14A52;
+    background-color: #175345;
+}
+
+.btn-lap {
+    outline: #473842 solid 2px;
+    border: 3px solid #183445;
+    color: #FFFFFF;
+    background-color: #473842;
 }
 
 .record {
-    margin-top: 2rem;
+    overflow: scroll;
+    border-top: 0.5px solid grey;
+    height: 40vh;
 }
 
 ul {
@@ -49,10 +68,34 @@ ul {
 }
 
 li {
-    padding: 1rem 0rem;
-    border-top: 0.5px solid grey;
+    border-bottom: 0.5px solid grey;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
+}
+
+
+p {
+    margin: 1rem 1rem;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #183445;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
