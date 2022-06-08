@@ -25,7 +25,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 50vh;
-    font-size: 5.5rem;
+    font-variant-numeric: tabular-nums;
+    font-size: 5rem;
 }
 
 .display p {
