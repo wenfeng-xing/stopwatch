@@ -57,7 +57,7 @@ body {
 }
 
 .btn-start:active {
-    background-color: #000;
+    background-color: #183445;
 }
 
 .btn-lap {
@@ -65,6 +65,10 @@ body {
     border: 3px solid #183445;
     color: #FFFFFF;
     background-color: #473842;
+}
+
+.btn-lap:active {
+    background-color: #183445;
 }
 
 .record {
