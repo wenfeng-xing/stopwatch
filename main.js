@@ -2,21 +2,18 @@ const btnStart = document.querySelector('.btn-start');
 const btnLap = document.querySelector('.btn-lap');
 const timeDisplay = document.querySelector('.time-display');
 
-let timerStart = false;
 let count = {minute: 0, second: 0, milliSecond: 0};
 let timeInterval;
 
 btnStart.addEventListener('click', controlTimer);
 
 function controlTimer () {
-    if (timerStart) {
+    if (btnStart.innerHTML === "Stop") {
         stopTimer();
-        timerStart = false;
         btnStart.innerHTML = "Start";
         btnLap.innerHTML = "Reset";
-    } else {
+    } else if (btnStart.innerHTML === "Start") {
         startTimer();
-        timerStart = true;
         btnStart.innerHTML = "Stop";
         btnLap.innerHTML = "Lap";
     }
@@ -24,10 +21,7 @@ function controlTimer () {
 
 function startTimer() {
     timeInterval = setInterval(() => {
-        const minute = count.minute >= 10 ? count.minute : "0" + count.minute;
-        const second = count.second >= 10 ? count.second : "0" + count.second;
-        const milliSecond = count.milliSecond >= 10 ? count.milliSecond : "0" + count.milliSecond;
-        timeDisplay.innerHTML = minute + ":" + second + "." + milliSecond;
+        displayTime();
         timer();
     }, 10);
 }
@@ -55,9 +49,13 @@ btnLap.addEventListener('click', controlLap);
 function controlLap() {
     if(btnLap.innerHTML === "Reset") {
         count = {minute: 0, second: 0, milliSecond: 0};
-        const minute = count.minute >= 10 ? count.minute : "0" + count.minute;
-        const second = count.second >= 10 ? count.second : "0" + count.second;
-        const milliSecond = count.milliSecond >= 10 ? count.milliSecond : "0" + count.milliSecond;
-        timeDisplay.innerHTML = minute + ":" + second + "." + milliSecond;
+        displayTime();
     }
+}
+
+function displayTime() {
+    const minute = count.minute >= 10 ? count.minute : "0" + count.minute;
+    const second = count.second >= 10 ? count.second : "0" + count.second;
+    const milliSecond = count.milliSecond >= 10 ? count.milliSecond : "0" + count.milliSecond;
+    timeDisplay.innerHTML = minute + ":" + second + "." + milliSecond;
 }
