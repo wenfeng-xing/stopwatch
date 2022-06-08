@@ -1,19 +1,19 @@
 const btnStart = document.querySelector('.btn-start');
 const btnLap = document.querySelector('.btn-lap');
 const timeDisplay = document.querySelector('.time-display');
-const count = {minute: 0, second: 0, milliSecond: 0};
+const count = { minute: 0, second: 0, milliSecond: 0 };
 
 // Set the timer for counting time
 btnStart.addEventListener('click', controlTimer);
 
-function controlTimer () {
+function controlTimer() {
     let timeInterval;
     if (btnStart.innerHTML === "Stop") {
         stopTimer(timeInterval);
         btnStart.innerHTML = "Start";
         btnLap.innerHTML = "Reset";
     } else if (btnStart.innerHTML === "Start") {
-        timeInterval =startTimer();
+        timeInterval = startTimer();
         btnStart.innerHTML = "Stop";
         btnLap.innerHTML = "Lap";
     }
@@ -50,8 +50,8 @@ function timer() {
 btnLap.addEventListener('click', controlLap);
 
 function controlLap() {
-    if(btnLap.innerHTML === "Reset") {
-        count = {minute: 0, second: 0, milliSecond: 0};
+    if (btnLap.innerHTML === "Reset") {
+        count = { minute: 0, second: 0, milliSecond: 0 };
         displayTime();
     }
 }
