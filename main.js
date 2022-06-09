@@ -1,13 +1,14 @@
 const btnStart = document.querySelector('.btn-start');
 const btnLap = document.querySelector('.btn-lap');
 const timeDisplay = document.querySelector('.time-display');
+const lapsListElement = document.querySelector('.laps-list');
 
-let count = { minute: 0, second: 0, milliSecond: 0 };
+const PLACEHOLDER_LAPS_LIST = ["", "", "", "", "", "", "", "", ""];
+let currentTimeCounter = { minute: 0, second: 0, milliSecond: 0 };
 let timeInterval;
+let lapCount = 0;
 
 // Set the timer for counting time
-btnStart.addEventListener('click', controlTimer);
-
 function controlTimer() {
     if (btnStart.innerHTML === "Stop") {
         stopTimer(timeInterval);
@@ -22,8 +23,9 @@ function controlTimer() {
 
 function startTimer() {
     const timeInterval = setInterval(() => {
-        displayTime();
-        timer();
+        timeDisplay.innerHTML = formatTime(currentTimeCounter);
+        currentTimeCounter = incrementTime(currentTimeCounter);
+        updateCurrentLap(currentTimeCounter, lapCount);
     }, 10);
 
     return timeInterval;
@@ -33,33 +35,85 @@ function stopTimer(timeInterval) {
     clearInterval(timeInterval);
 }
 
-function timer() {
-    if (count.milliSecond < 99) {
-        count.milliSecond++;
+function incrementTime(counter) {
+    let {minute, second, milliSecond} = counter;
+    if (milliSecond < 99) {
+        milliSecond++;
     } else {
-        count.milliSecond = 0;
-        count.second++;
+        milliSecond = 0;
+        second++;
     }
 
-    if (count.second === 60) {
-        count.second = 0;
-        count.minute++;
+    if (second === 60) {
+        second = 0;
+        minute++;
     }
+
+    return {minute, second, milliSecond};
 }
 
 // Set the counter of time for each lap
-btnLap.addEventListener('click', controlLap);
 
 function controlLap() {
+    if (btnLap.innerHTML === "Lap") {
+        lapCount++;
+        addNewLapElement(currentTimeCounter, lapCount, false);
+    }
+
     if (btnLap.innerHTML === "Reset") {
-        count = { minute: 0, second: 0, milliSecond: 0 };
-        displayTime();
+        currentTimeCounter = { minute: 0, second: 0, milliSecond: 0 };
+        timeDisplay.innerHTML = formatTime(currentTimeCounter);
+        displayInitialLaps();
     }
 }
 
-function displayTime() {
-    const minute = count.minute >= 10 ? count.minute : "0" + count.minute;
-    const second = count.second >= 10 ? count.second : "0" + count.second;
-    const milliSecond = count.milliSecond >= 10 ? count.milliSecond : "0" + count.milliSecond;
-    timeDisplay.innerHTML = minute + ":" + second + "." + milliSecond;
+function formatTime(counter) {
+    const minute = counter.minute >= 10 ? counter.minute : "0" + counter.minute;
+    const second = counter.second >= 10 ? counter.second : "0" + counter.second;
+    const milliSecond = counter.milliSecond >= 10 ? counter.milliSecond : "0" + counter.milliSecond;
+    return `${minute}:${second}.${milliSecond}`;
 }
+
+function createLiElementContent(lap, index, isPlaceHold) {
+    const pLapNumberElement = document.createElement("p");
+    pLapNumberElement.innerText = isPlaceHold ? "" : `Lap ${index}` ;
+    pLapNumberElement.className = "count-lap";
+    const pTimeElement = document.createElement("p");
+    pTimeElement.innerText = isPlaceHold ? "" : lap;
+    pTimeElement.className = "time";
+
+    return {pLapNumberElement, pTimeElement};
+}
+
+function addNewLapElement(counter, index, isPlaceHold) {
+    const lap = isPlaceHold ? counter : formatTime(counter);
+    const {pLapNumberElement, pTimeElement} = createLiElementContent(lap, index, isPlaceHold);
+    const liElement = document.createElement("li");
+    liElement.appendChild(pLapNumberElement);
+    liElement.appendChild(pTimeElement);
+
+    const currentFirstLiElement = document.querySelector(".laps-list > li");
+    lapsListElement.insertBefore(liElement, currentFirstLiElement);
+}
+
+function updateCurrentLap(counter, index) {
+    const currentLiCountLap = document.querySelector(".laps-list > li .count-lap");
+    const currentLiTime = document.querySelector(".laps-list > li .time");
+    const currentCount = formatTime(counter);
+    const {pLapNumberElement, pTimeElement} = createLiElementContent(currentCount, index);
+    currentLiCountLap.replaceWith(pLapNumberElement);
+    currentLiTime.replaceWith(pTimeElement);
+}
+
+function displayInitialLaps() {
+    PLACEHOLDER_LAPS_LIST.forEach((ele, index) => addNewLapElement(ele, index, true));
+}
+
+// start stopwatch
+function execute() {
+    btnLap.addEventListener('click', controlLap);
+    btnStart.addEventListener('click', controlTimer);
+    displayInitialLaps();
+}
+
+execute();
