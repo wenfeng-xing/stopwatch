@@ -4,6 +4,8 @@ const timeDisplay = document.querySelector('.time-display');
 const lapsListElement = document.querySelector('.laps-list');
 
 const PLACEHOLDER_LAPS_LIST = ["", "", "", "", "", "", "", "", ""];
+
+let previousLapTimeCounter = {minute: 0, second: 0, milliSecond: 0}
 let currentTimeCounter = { minute: 0, second: 0, milliSecond: 0 };
 let timeInterval;
 let lapCount = 0;
@@ -25,7 +27,7 @@ function startTimer() {
     const timeInterval = setInterval(() => {
         timeDisplay.innerHTML = formatTime(currentTimeCounter);
         currentTimeCounter = incrementTime(currentTimeCounter);
-        updateCurrentLap(currentTimeCounter, lapCount);
+        updateCurrentLap(caculateTimeDifference(currentTimeCounter, previousLapTimeCounter), lapCount);
     }, 10);
 
     return timeInterval;
@@ -57,7 +59,8 @@ function incrementTime(counter) {
 function controlLap() {
     if (btnLap.innerHTML === "Lap") {
         lapCount++;
-        addNewLapElement(currentTimeCounter, lapCount, false);
+        addNewLapElement(caculateTimeDifference(currentTimeCounter, previousLapTimeCounter), lapCount, false);
+        previousLapTimeCounter = {minute: currentTimeCounter.minute, second: currentTimeCounter.second, milliSecond: currentTimeCounter.milliSecond};
     }
 
     if (btnLap.innerHTML === "Reset") {
@@ -65,6 +68,16 @@ function controlLap() {
         timeDisplay.innerHTML = formatTime(currentTimeCounter);
         displayInitialLaps();
     }
+}
+
+function caculateTimeDifference(currentTimeCounter, previousTimeCounter) {
+    console.log("current", currentTimeCounter);
+    console.log("previous", previousTimeCounter);
+    const milliSecond = currentTimeCounter.milliSecond - previousTimeCounter.milliSecond;
+    const second = currentTimeCounter.second - previousTimeCounter.second;
+    const minute = currentTimeCounter.minute - previousTimeCounter.minute;
+
+    return {minute, second, milliSecond};
 }
 
 function formatTime(counter) {
