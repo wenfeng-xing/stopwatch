@@ -18,7 +18,7 @@ body {
     padding: 5px 10px;
     color: white;
     text-align: center;
-    background-color: #183445;
+    background-color: #000;
 }
 
 .display {
@@ -53,24 +53,24 @@ body {
 
 .btn-start {
     outline: #175345 solid 2px;
-    border: 3px solid #183445;
+    border: 3px solid #000;
     color: #B14A52;
     background-color: #175345;
 }
 
 .btn-start:active {
-    background-color: #183445;
+    background-color: #000;
 }
 
 .btn-lap {
     outline: #473842 solid 2px;
-    border: 3px solid #183445;
+    border: 3px solid #000;
     color: #FFFFFF;
     background-color: #473842;
 }
 
 .btn-lap:active {
-    background-color: #183445;
+    background-color: #000;
 }
 
 .record {
@@ -104,7 +104,7 @@ p {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #183445;
+    background: #000;
 }
 
 /* Handle */

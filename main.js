@@ -58,6 +58,7 @@ function incrementTime(counter) {
 
 function controlLap() {
     if (btnLap.innerHTML === "Lap" && btnStart.innerHTML === "Stop") {
+        markLowestAndFastestLaps(getLowestAndFastesdLaps());
         lapCount++;
         addNewLapElement(caculateTimeDifference(currentTimeCounter, previousLapTimeCounter), lapCount, false);
         previousLapTimeCounter = {minute: currentTimeCounter.minute, second: currentTimeCounter.second, milliSecond: currentTimeCounter.milliSecond};
@@ -129,6 +130,61 @@ function displayInitialLaps() {
     lapCount = 0;
     lapsListElement.innerHTML = "";
     PLACEHOLDER_LAPS_LIST.forEach((ele, index) => addNewLapElement(ele, index, true));
+}
+
+function markLowestAndFastestLaps({lowestLap, fastestLap}) {
+    console.log(lowestLap, fastestLap);
+    lapsListElement.childNodes.forEach(element => element.childNodes.forEach(ele => ele.style.color = "white"));
+
+    fastestLap?.childNodes?.forEach(element => element.style.color = "red");
+    lowestLap?.childNodes?.forEach(element => element.style.color = "green");
+}
+
+function getLowestAndFastesdLaps() {
+    let slowestLap = null;
+    let fastestLap = null;
+
+    lapsListElement.childNodes.forEach(node => {
+        if (compareLapTime(node, fastestLap) > 0) {
+            fastestLap = node;
+        }
+        if (compareLapTime(node, slowestLap) <= 0) {
+            slowestLap = node;
+        }
+    });
+
+    return {slowestLap, fastestLap};
+}
+
+function compareLapTime(currentLapNode, comparedLapNode) {
+    const currentLapTimeText = currentLapNode.childNodes[1].innerHTML;
+    const comparedLapTimeText = comparedLapNode?.childNodes[1]?.innerHTML;
+
+    if (!comparedLapTimeText) {
+        return 1;
+    }
+    const [currentMinute, currentSecond, currentMillisecond] = currentLapTimeText.split(/[:.]/);
+    const [comparedMinute, comparedSecond, comparedMillisecond] = comparedLapTimeText.split(/[:.]/);
+
+    if (+currentMinute > +comparedMinute) {
+        return 1;
+    } else if (+currentMinute > +comparedMinute) {
+        return -1;
+    } else {
+        if (+currentSecond > +comparedSecond) {
+            return 1;
+        } else if (+currentSecond < +comparedSecond) {
+            return -1;
+        } else {
+            if (+currentMillisecond > + comparedMillisecond) {
+                return 1;
+            } else if (+currentMillisecond < +comparedMillisecond) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }
 
 // start stopwatch
