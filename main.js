@@ -57,7 +57,7 @@ function incrementTime(counter) {
 // Set the counter of time for each lap
 
 function controlLap() {
-    if (btnLap.innerHTML === "Lap") {
+    if (btnLap.innerHTML === "Lap" && btnStart.innerHTML === "Stop") {
         lapCount++;
         addNewLapElement(caculateTimeDifference(currentTimeCounter, previousLapTimeCounter), lapCount, false);
         previousLapTimeCounter = {minute: currentTimeCounter.minute, second: currentTimeCounter.second, milliSecond: currentTimeCounter.milliSecond};
@@ -71,11 +71,18 @@ function controlLap() {
 }
 
 function caculateTimeDifference(currentTimeCounter, previousTimeCounter) {
-    console.log("current", currentTimeCounter);
-    console.log("previous", previousTimeCounter);
-    const milliSecond = currentTimeCounter.milliSecond - previousTimeCounter.milliSecond;
-    const second = currentTimeCounter.second - previousTimeCounter.second;
-    const minute = currentTimeCounter.minute - previousTimeCounter.minute;
+    let borrow = 0;
+    let milliSecond = currentTimeCounter.milliSecond - previousTimeCounter.milliSecond;
+    if (milliSecond < 0) {
+        borrow = 1;
+        milliSecond += 100;
+    }
+    let second = currentTimeCounter.second - borrow - previousTimeCounter.second;
+    if (second < 0) {
+        borrow = 1;
+        second += 60;
+    }
+    const minute = currentTimeCounter.minute - borrow - previousTimeCounter.minute;
 
     return {minute, second, milliSecond};
 }
@@ -119,6 +126,8 @@ function updateCurrentLap(counter, index) {
 }
 
 function displayInitialLaps() {
+    lapCount = 0;
+    lapsListElement.innerHTML = "";
     PLACEHOLDER_LAPS_LIST.forEach((ele, index) => addNewLapElement(ele, index, true));
 }
 
