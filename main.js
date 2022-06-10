@@ -132,16 +132,18 @@ function displayInitialLaps() {
     PLACEHOLDER_LAPS_LIST.forEach((ele, index) => addNewLapElement(ele, index, true));
 }
 
-function markLowestAndFastestLaps({lowestLap, fastestLap}) {
-    console.log(lowestLap, fastestLap);
+function markLowestAndFastestLaps({slowestLap, fastestLap}) {
+    console.log(slowestLap, fastestLap);
     lapsListElement.childNodes.forEach(element => element.childNodes.forEach(ele => ele.style.color = "white"));
 
     fastestLap?.childNodes?.forEach(element => element.style.color = "red");
-    lowestLap?.childNodes?.forEach(element => element.style.color = "green");
+    slowestLap?.childNodes?.forEach(element => element.style.color = "green");
 }
 
 function getLowestAndFastesdLaps() {
-    let slowestLap = null;
+    let temporarLapNode = document.cloneNode(lapsListElement.childNodes[0]);
+    temporarLapNode.childNodes[1].innerHTML = "59:59.99";
+    let slowestLap = temporarLapNode;
     let fastestLap = null;
 
     lapsListElement.childNodes.forEach(node => {
@@ -160,15 +162,18 @@ function compareLapTime(currentLapNode, comparedLapNode) {
     const currentLapTimeText = currentLapNode.childNodes[1].innerHTML;
     const comparedLapTimeText = comparedLapNode?.childNodes[1]?.innerHTML;
 
+    if (!currentLapTimeText) {
+        return 0;
+    }
     if (!comparedLapTimeText) {
         return 1;
     }
     const [currentMinute, currentSecond, currentMillisecond] = currentLapTimeText.split(/[:.]/);
     const [comparedMinute, comparedSecond, comparedMillisecond] = comparedLapTimeText.split(/[:.]/);
-
+    console.log({currentMinute, currentSecond, currentMillisecond});
     if (+currentMinute > +comparedMinute) {
         return 1;
-    } else if (+currentMinute > +comparedMinute) {
+    } else if (+currentMinute < +comparedMinute) {
         return -1;
     } else {
         if (+currentSecond > +comparedSecond) {
