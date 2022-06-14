@@ -7,12 +7,15 @@ export function formatTimeToText(time) {
 
     const minuteText = minute < 10 ? `0${minute}` : minute;
     const secondText = second < 10 ? `0${second}` : second;
-    const milliSecondTextß = milliSecond < 10 ? `0${milliSecond}` : milliSecond;
+    const milliSecondText = milliSecond < 10 ? `0${milliSecond}` : milliSecond;
 
-    return `${minute}:${second}.${milliSecond}`;
+    return `${minuteText}:${secondText}.${milliSecondText}`;
 }
 
 export function formatTextToTime(timeText) {
+    if (!timeText) {
+        return 0;
+    }
     const [minute, second, milliSecond] = timeText.split(/[:.]/);
 
     return minute * 60000 + second * 1000 + milliSecond * 10;

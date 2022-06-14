@@ -1,4 +1,4 @@
-function* timeDifferenceGenerator() {
+export default function* timeDifferenceGenerator() {
     const initTime = Date.now();
 
     while (true) {
