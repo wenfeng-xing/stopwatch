@@ -17,10 +17,8 @@ function main() {
 
     clickContrroller.initializeStopWatch();
 
-    // $startStopButton.click = clickContrroller.handlStartStopButtonClick.bind(clickContrroller));
-    // $lapResetButton.click = clickContrroller.handleLapResetButtonClick.bind(clickContrroller));
-    $startStopButton.addEventListener('click', clickContrroller.handlStartStopButtonClick.bind(clickContrroller));
-    $lapResetButton.addEventListener('click', clickContrroller.handleLapResetButtonClick.bind(clickContrroller));
+    $startStopButton.onclick = clickContrroller.handlStartStopButtonClick.bind(clickContrroller);
+    $lapResetButton.onclick = clickContrroller.handleLapResetButtonClick.bind(clickContrroller);
 }
 
 main();
