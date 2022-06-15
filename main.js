@@ -1,4 +1,4 @@
-import ClickController from "./controller/clickContrroller.js";
+import Click from "./controller/click.contrroller.js";
 import ButtonControl from "./view/buttonControl.view.js";
 import LapList from "./view/lapList.view.js";
 import TimeDisplay from "./view/timeDisplay.view.js";
@@ -13,9 +13,12 @@ function main() {
     const timeDisplay = new TimeDisplay($timeDisplay);
     const lapList = new LapList($lapList);
 
-    const clickContrroller = new ClickController(buttonControl, lapList, timeDisplay);
+    const clickContrroller = new Click(buttonControl, lapList, timeDisplay);
 
     clickContrroller.initializeStopWatch();
+
+    // $startStopButton.click = clickContrroller.handlStartStopButtonClick.bind(clickContrroller));
+    // $lapResetButton.click = clickContrroller.handleLapResetButtonClick.bind(clickContrroller));
     $startStopButton.addEventListener('click', clickContrroller.handlStartStopButtonClick.bind(clickContrroller));
     $lapResetButton.addEventListener('click', clickContrroller.handleLapResetButtonClick.bind(clickContrroller));
 }
