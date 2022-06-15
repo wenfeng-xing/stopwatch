@@ -8,7 +8,6 @@ export default class Click {
         this.buttonControl = buttonControl;
         this.timeDisplay = timeDisplay;
         this.lapList = lapList;
-        this.interval = 0;
         this.timer = new Timer();
         this.lapTimer = new LapTimer();
         this.pause = true;
@@ -21,6 +20,8 @@ export default class Click {
     handlStartStopButtonClick() {
         if (this.buttonControl.getStartStopButtonState() === "Start") {
             this.buttonControl.toggleStartStopButtonText();
+            this.timer.restartTimer();
+            this.lapTimer.restartTimer();
             this.pause = false;
             this.interval = setTimeout(function run() {
                 this.timeDisplay.setTimeText(this.timer.getTimePassedText());
@@ -30,11 +31,11 @@ export default class Click {
                     setTimeout(run.bind(that), 16);
                 }
             }.bind(this), 10);
-            console.log(this.interval)
         } else if (this.buttonControl.getStartStopButtonState() === "Stop") {
             this.buttonControl.toggleStartStopButtonText();
             this.pause = true;
-            clearTimeout(this.interval);
+            this.timer.pauseTimer();
+            this.lapTimer.pauseTimer();
         }
     }
 

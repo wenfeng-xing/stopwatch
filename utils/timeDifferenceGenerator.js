@@ -1,7 +1,8 @@
-export default function* timeDifferenceGenerator() {
-    const initTime = Date.now();
+export default function* timeDifferenceGenerator(diff) {
+    let initTime = Date.now();
 
     while (true) {
-        yield Date.now() - initTime;
+        const result = diff > 0 ? (Date.now() - initTime + diff) : Date.now() - initTime;
+        yield result;
     }
 }
