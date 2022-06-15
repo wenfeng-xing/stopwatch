@@ -95,7 +95,8 @@ li {
     font-size: 1rem;
 }
 
-p {
+li p {
+    font-variant-numeric: tabular-nums;
     margin: 1rem 1rem;
 }
 
