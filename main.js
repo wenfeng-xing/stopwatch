@@ -6,7 +6,7 @@ import TimeDisplay from "./view/timeDisplay.view.js";
 function main() {
     const $lapResetButton = document.querySelector('.btn-lap');
     const $startStopButton = document.querySelector('.btn-start');
-    const $timeDisplay = document.querySelector('.display p');
+    const $timeDisplay = document.querySelector('.item-time-display');
     const $lapList = document.querySelector('.laps-list');
 
     const buttonControl = new ButtonControl($startStopButton, $lapResetButton);
