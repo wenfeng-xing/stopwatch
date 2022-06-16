@@ -15,8 +15,11 @@ export default class ButtonControl {
     toggleStartStopButtonText() {
         if (this.$StartStopButtonNode.innerHTML === "Start") {
             this.$StartStopButtonNode.innerHTML = "Stop";
+            this.$StartStopButtonNode.className = "btn-start pause";
             this.$LapResetButtonNode.innerHTML = "Lap";
         } else if (this.$StartStopButtonNode.innerHTML === "Stop") {
+            this.$StartStopButtonNode.innerHTML = "Start";
+            this.$StartStopButtonNode.className = "btn-start start";
             this.$StartStopButtonNode.innerHTML = "Start";
             this.$LapResetButtonNode.innerHTML = "Reset";
         }
