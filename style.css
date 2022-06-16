@@ -3,6 +3,14 @@
     src: url('./SF-Pro-Text-Ultralight.otf') format('opentype');
 }
 
+:root {
+    --right-button-background-color: rgb(49, 33, 7);
+    --right-button-background-clicked: rgb(25, 16, 4);
+    --right-button-font-color: rgb(240, 160, 80);
+    --left-button-background-color: rgb(51, 51, 51);
+    --left-button-background-clicked: rgb(26, 26, 26);
+}
+
 body {
     font-family: 'SFProText';
     /* font-weight: 10; */
@@ -18,7 +26,7 @@ body {
     padding: 5px 10px;
     color: white;
     text-align: center;
-    background-color: #000;
+    background-color: black;
 }
 
 .wrapper-display {
@@ -52,25 +60,25 @@ body {
 }
 
 .btn-start {
-    outline: #175345 solid 2px;
-    border: 3px solid #000;
-    color: #B14A52;
-    background-color: #175345;
+    outline: var(--right-button-background-color) solid 2px;
+    border: 3px solid black;
+    color: var(--right-button-font-color);
+    background-color: var(--right-button-background-color);
 }
 
 .btn-start:active {
-    background-color: #000;
+    background-color: var(--right-button-background-clicked);
 }
 
 .btn-lap {
-    outline: #473842 solid 2px;
-    border: 3px solid #000;
-    color: #FFFFFF;
-    background-color: #473842;
+    outline: var(--left-button-background-color) solid 2px;
+    border: 3px solid black;
+    color: white;
+    background-color: var(--left-button-background-color);
 }
 
 .btn-lap:active {
-    background-color: #000;
+    background-color: var(--left-button-background-clicked);
 }
 
 .wrapper-record {
@@ -107,7 +115,7 @@ li p {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #000;
+    background: black;
 }
 
 /* Handle */
