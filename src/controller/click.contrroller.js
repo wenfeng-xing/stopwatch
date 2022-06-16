@@ -1,7 +1,5 @@
 import LapTimer from "../model/lapTimer.model.js";
 import Timer from "../model/timer.model.js";
-import timeDifferenceGenerator from "../utils/timeDifferenceGenerator.js";
-import { formatTimeToText } from "../utils/timeFormatter.js";
 
 export default class Click {
     constructor(buttonControl, lapList, timeDisplay) {
@@ -10,7 +8,6 @@ export default class Click {
         this.lapList = lapList;
         this.timer = new Timer();
         this.lapTimer = new LapTimer();
-        this.pause = true;
     }
 
     initializeStopWatch() {
@@ -22,20 +19,17 @@ export default class Click {
             this.buttonControl.toggleStartStopButtonText();
             this.timer.restartTimer();
             this.lapTimer.restartTimer();
-            this.pause = false;
-            this.interval = setTimeout(function run() {
+            setTimeout(function run() {
                 this.timeDisplay.setTimeText(this.timer.getTimePassedText());
                 this.lapList.updateCurrentLap({ ...this.lapTimer.getTimePassedText() });
                 const that = this;
-                if (!this.pause) {
-                    setTimeout(run.bind(that), 16);
-                }
+                this.interval = setTimeout(run.bind(that), 16);
             }.bind(this), 10);
         } else if (this.buttonControl.getStartStopButtonState() === "Stop") {
             this.buttonControl.toggleStartStopButtonText();
-            this.pause = true;
             this.timer.pauseTimer();
             this.lapTimer.pauseTimer();
+            clearTimeout(this.interval);
         }
     }
 
